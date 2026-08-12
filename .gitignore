@@ -1,0 +1,132 @@
+# Nostos — ignores
+#
+# Engine-specific sections are present for the three candidates so that
+# whichever is chosen, the first commit after the decision does not accidentally
+# add a Library/ or Intermediate/ directory. Delete the sections that do not
+# apply once the engine is settled — an ignore file that covers engines the
+# project does not use hides real files if one of those directory names is later
+# reused for something else.
+
+# --- OS / editor -------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vs/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# --- Claude Code -------------------------------------------------------------
+# Local overrides and per-machine permission grants are not shared.
+.claude/settings.local.json
+.claude/worktrees/
+# The working-copy lock lives inside .git and is already untracked.
+
+# --- Build output ------------------------------------------------------------
+build/
+Build/
+builds/
+dist/
+out/
+bin/
+obj/
+*.o
+*.obj
+*.a
+*.lib
+*.pdb
+*.ilk
+*.exp
+
+# --- Profiling and capture artefacts ----------------------------------------
+# Traces are evidence for a specific investigation, not repo history. Attach one
+# to the task or the PR that needed it; committing them makes the repo grow
+# without making any of them findable.
+*.trace
+*.nvvp
+*.rdc
+*.gputrace
+captures/
+profiling/
+
+# --- Logs, crashes, local player data ---------------------------------------
+*.log
+logs/
+crashes/
+*.dmp
+saves/
+Saves/
+local-config/
+
+# --- Third-party art packs ---------------------------------------------------
+# THIS REPOSITORY IS PUBLIC. Oryx licences generally permit shipping the art
+# inside a game and forbid redistributing it as art — and a public repo carrying
+# the raw pack is plausibly redistribution. Read the licence actually purchased
+# (tasks/known-gaps.md ART-1) before the first pack asset is committed. If it
+# forbids it, uncomment the line below and fetch the pack at build time instead.
+#
+# assets/vendor/
+
+# --- Secrets -----------------------------------------------------------------
+# Never a signing key, a platform SDK credential, or a store token in the repo.
+.env
+.env.local
+*.keystore
+*.jks
+*.p12
+*.mobileprovision
+signing/
+
+# --- Unity -------------------------------------------------------------------
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.booproj
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+
+# --- Unreal ------------------------------------------------------------------
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.VC.db
+*.opensdf
+*.sdf
+*.xcodeproj/
+*.xcworkspace/
+
+# --- Godot -------------------------------------------------------------------
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+*.translation
+
+# --- Node (tooling, asset pipeline, web build) -------------------------------
+node_modules/
+*.tsbuildinfo
+.next/
+coverage/
+
+# --- Rust / C++ tooling ------------------------------------------------------
+target/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json

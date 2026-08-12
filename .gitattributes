@@ -1,0 +1,96 @@
+# Nostos — attributes
+#
+# Two jobs: keep line endings stable across machines, and stop git from trying
+# to diff or merge binary assets it cannot merge.
+#
+# Git LFS is NOT enabled yet — `git-lfs` is not installed on this machine, and
+# declaring `filter=lfs` for a filter that does not exist makes every commit
+# touching a matched file fail with an opaque "external filter failed". The LFS
+# block below is therefore inert until someone runs `git lfs install`. See
+# tasks/known-gaps.md ASSET-1: this must be done BEFORE the first binary asset
+# is committed, because converting history afterwards means rewriting it.
+
+* text=auto eol=lf
+
+# Windows-only tooling that genuinely needs CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Shell scripts must stay LF regardless of platform — a CRLF shebang line makes
+# the hook guards fail to execute with "bad interpreter".
+*.sh text eol=lf
+
+# --- Binary: do not diff, do not attempt to merge ----------------------------
+# `binary` is shorthand for `-text -diff`. `-merge` is added explicitly: git's
+# default union/ours merge on a binary file produces a corrupt asset that opens
+# in the editor and looks fine until it does not.
+
+# Images and textures
+*.png binary -merge
+*.jpg binary -merge
+*.jpeg binary -merge
+*.tga binary -merge
+*.psd binary -merge
+*.exr binary -merge
+*.hdr binary -merge
+*.dds binary -merge
+*.ktx binary -merge
+*.ktx2 binary -merge
+*.basis binary -merge
+
+# Audio
+*.wav binary -merge
+*.ogg binary -merge
+*.mp3 binary -merge
+*.flac binary -merge
+*.bank binary -merge
+*.fsb binary -merge
+
+# Video
+*.mp4 binary -merge
+*.webm binary -merge
+*.mov binary -merge
+*.bk2 binary -merge
+
+# Models and animation
+*.fbx binary -merge
+*.glb binary -merge
+*.blend binary -merge
+*.obj binary -merge
+*.abc binary -merge
+
+# Fonts
+*.ttf binary -merge
+*.otf binary -merge
+*.woff binary -merge
+*.woff2 binary -merge
+
+# Engine-authored binaries
+*.uasset binary -merge
+*.umap binary -merge
+*.res binary -merge
+*.pak binary -merge
+*.bundle binary -merge
+
+# Archives
+*.zip binary -merge
+*.7z binary -merge
+
+# --- Git LFS (inert until `git lfs install` — see header) --------------------
+# Uncomment as a single block once LFS is installed and the remote supports it.
+# Do NOT uncomment a subset: a repo where some binary types are in LFS and some
+# are not is the hardest state to reason about later.
+#
+# *.png  filter=lfs diff=lfs merge=lfs -text
+# *.tga  filter=lfs diff=lfs merge=lfs -text
+# *.psd  filter=lfs diff=lfs merge=lfs -text
+# *.exr  filter=lfs diff=lfs merge=lfs -text
+# *.wav  filter=lfs diff=lfs merge=lfs -text
+# *.ogg  filter=lfs diff=lfs merge=lfs -text
+# *.mp4  filter=lfs diff=lfs merge=lfs -text
+# *.fbx  filter=lfs diff=lfs merge=lfs -text
+# *.glb  filter=lfs diff=lfs merge=lfs -text
+# *.blend filter=lfs diff=lfs merge=lfs -text
+# *.uasset filter=lfs diff=lfs merge=lfs -text
+# *.umap filter=lfs diff=lfs merge=lfs -text
